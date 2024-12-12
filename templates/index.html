@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Recommendation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        main {
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            color: red;
+            font-weight: bold;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Medicine Recommendation System</h1>
+    </header>
+    <main>
+        <form action="/predict" method="POST">
+            <label for="symptoms">Enter Symptoms (comma-separated):</label>
+            <input type="text" id="symptoms" name="symptoms" placeholder="e.g., fever, headache, nausea" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if message %}
+        <div class="message">
+            <p>{{ message }}</p>
+        </div>
+        {% endif %}
+
+        {% if pred_disease %}
+        <div class="result">
+            <h2>Prediction Result:</h2>
+            <p><b>Predicted Disease:</b> {{ pred_disease }}</p>
+            <p><b>Description:</b> {{ pred_des }}</p>
+            <p><b>Medications:</b> {{ pred_med }}</p>
+            <p><b>Precautions:</b></p>
+            <ul>
+                {% for precaution in pred_pre %}
+                <li>{{ precaution }}</li>
+                {% endfor %}
+            </ul>
+            <p><b>Recommended Diet:</b></p>
+            <ul>
+                {% for diet in pred_diet %}
+                <li>{{ diet }}</li>
+                {% endfor %}
+            </ul>
+            <p><b>Workout:</b> {{ pred_wout }}</p>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>
